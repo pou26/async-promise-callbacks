@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrap">
+        <button onclick="callBacks()">
+            Click Me
+        </button>
+    
+        <div id="para" class="content"></div>
+    </div>
+    <script>
+        // Fetch Data Promise
+        function fetchData() {
+            return new Promise((resolve, reject) => {
+                
+                fetch('https://dummyjson.com/posts')
+                    .then(res => res.json())
+                    .then(data => {
+                        resolve(data.posts); // Resolve the promise with fetched data
+                    })
+                    .catch(err => reject("Error fetching data!")); // Reject if there's an error
+            });
+        }
+
+        // Timeout Promise
+        function timeout(ms) {
+            return new Promise((_, reject) => {
+                setTimeout(() => {
+                    reject("Operation timed out!"); // Reject if operation takes too long
+                }, ms);
+            });
+        }
+
+        function callBacks() {
+            // Use Promise.race to race between fetching data and timeout
+            Promise.race([fetchData(), timeout(5000)])
+                .then(fetchedData => {
+                    document.getElementById("para").innerHTML = "Loading...";
+                    setTimeout(() => {
+                        const allData = fetchedData.map(post => `
+                            <p><strong>${post.title}</strong>: ${post.body}</p>
+                        `).join('');
+                        document.getElementById("para").innerHTML = allData;
+                    }, 5000); // 5 seconds delay to display data
+                })
+                .catch(err => {
+                    // If there's an error or timeout, display the error message
+                    document.getElementById("para").innerHTML = `<p>${err}</p>`;
+                    console.log(err);
+                });
+        }
+    </script>
+</body>
+</html>

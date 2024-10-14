@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrap">
+        <button onclick="callBacks()">
+            Click Me
+        </button>
+    
+        <div id="para" class="content"></div>
+    </div>
+    <script>
+        let fetchedData = []; // Variable to store fetched data
+    
+        // Fetch the data and store it in the variable
+        fetch('https://dummyjson.com/posts')
+            .then(res => res.json())
+            .then(data => {
+                fetchedData = data.posts; // Store the posts array
+                console.log(fetchedData); // Check if the data is correctly fetched
+            });
+    
+        function callBacks() {
+            setTimeout(() => {
+                // Display the fetched data in the "para" div
+                document.getElementById("para").innerHTML = fetchedData.map(post => `
+                    <p><strong>${post.title}</strong>: ${post.body}</p>
+                `).join(''); // Create a list of titles and body from fetched posts
+            }, 5000); // 5 seconds delay
+        }
+    </script>
+    </body>
+</html>

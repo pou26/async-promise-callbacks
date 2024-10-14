@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+
+</head>
+<body>
+    <div class="wrap">
+    <button onclick="handleClick()">
+        Click Me
+    </button>
+
+    <div id="para" class="content"></div>
+</div>
+    <script>
+       const fetchData=async () => {
+        try{
+           const response=await fetch('https://dummyjson.com/posts');
+
+           if (!response.ok) {
+                    throw new Error("Network response was not ok"); // Handle bad responses
+                }
+
+           const data= await response.json();
+           return data.posts;
+        }catch(err){
+            throw new Error(error.message);
+        }
+       }
+      async function handleClick(){
+        document.getElementById("para").innerHTML = "Loading...";
+        const timeout = setTimeout(() => {
+            document.getElementById("para").innerHTML = "Operation timed out";
+
+
+        }, 5000);
+        try{
+            const fetchedData=await fetchData();
+            clearTimeout(timeout); // Clear timeout if fetch succeeds
+
+            const allData=fetchedData.map(post=>` <p><strong>${post.title}</strong>: ${post.body}</p>`).join('')
+            document.getElementById("para").innerHTML=allData;
+        }
+        catch{
+            document.getElementById("para").innerHTML = `Error: ${error.message}`; 
+        }
+
+       }
+       
+    </script>
+</body>
+</html>
