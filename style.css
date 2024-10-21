@@ -13,6 +13,15 @@ button{
     border-radius: 5px;
 
 }
+.index-wrap{
+    display: flex;
+    justify-content: space-evenly; /* Center horizontally */
+    align-items: center; 
+    margin-top: 50vh;
+}
+.link{
+    text-decoration: none;
+}
 
 .wrap{
     display: flex;

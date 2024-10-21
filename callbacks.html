@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <link rel="icon" href="./root/favicon.ico" type="image/x-icon">
+    <title>Callbacks</title>
 </head>
 <body>
     <div class="wrap">
@@ -26,6 +27,7 @@
             });
     
         function callBacks() {
+            document.getElementById("para").innerHTML = "<p>Callback will execute after 5 seconds</p>";
             setTimeout(() => {
                 // Display the fetched data in the "para" div
                 document.getElementById("para").innerHTML = fetchedData.map(post => `
